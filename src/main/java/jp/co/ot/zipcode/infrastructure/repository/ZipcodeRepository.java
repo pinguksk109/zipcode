@@ -39,7 +39,6 @@ public class ZipcodeRepository {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "郵便番号APIからレスポンスを取得できませんでした");
 		}
 		
-		
 		String responseBody = response.parseAsString();
 		response.disconnect();
 		
