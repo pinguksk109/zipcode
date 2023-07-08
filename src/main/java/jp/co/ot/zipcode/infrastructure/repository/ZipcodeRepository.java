@@ -17,6 +17,12 @@ public class ZipcodeRepository {
 
 	private static final String URL = "https://zip-cloud.appspot.com/api/search?zipcode={zipcode}";
 	
+	/**
+	 * 郵便番号APIから郵便番号に紐づく住所を取得する
+	 * @param zipCode
+	 * @return
+	 * @throws IOException
+	 */
 	public String searchAddress(String zipCode) throws IOException {
 	    
 		// HttpClientオブジェクトを作成
