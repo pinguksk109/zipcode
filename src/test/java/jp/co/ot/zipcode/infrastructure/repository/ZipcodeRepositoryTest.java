@@ -72,8 +72,8 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
                         		+ "	],\n"
                         		+ "	\"status\": 200\n"
                         		+ "}"));
-        String zipCode = "0790177";
-        String responseBody = sut.searchAddress(zipCode);
+        String zipcode = "0790177";
+        String responseBody = sut.searchAddress(zipcode);
         System.out.println(responseBody);
 
         assertEquals("{\n"

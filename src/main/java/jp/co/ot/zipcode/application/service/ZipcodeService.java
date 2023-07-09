@@ -22,8 +22,7 @@ public class ZipcodeService {
 	public String searchAddress(String zipcode) throws IOException {
 		try {
 			// 取得処理実行
-			String response = zipcodeRepository.searchAddress(zipcode);
-			return response;
+			return zipcodeRepository.searchAddress(zipcode);
 		} catch (IOException e) {
 			return("郵便番号の取得でエラーが発生しました");
 		}

@@ -38,7 +38,6 @@ public class ZipcodeController {
 			ErrorResponse errorResponse = new ErrorResponse(errorDetail);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		}
-
 		
 		return ResponseEntity.ok().body(response);
 	}
