@@ -16,10 +16,10 @@ import org.mockserver.model.HttpResponse;
 public class ZipcodeRepositoryTest extends ZipcodeRepository {
 
 	@InjectMocks
-    ZipcodeRepository sut;
-    ClientAndServer mockServer;
-    Integer mockPort = 1080;
-    String mockServerUrl = "http://localhost:" + mockPort;
+    private ZipcodeRepository sut;
+    private ClientAndServer mockServer;
+    private Integer mockPort = 1080;
+    private String mockServerUrl = "http://localhost:" + mockPort;
     
     @BeforeEach
     public void setUp() {
