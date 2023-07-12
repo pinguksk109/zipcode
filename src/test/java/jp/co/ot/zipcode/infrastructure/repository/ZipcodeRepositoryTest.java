@@ -13,6 +13,8 @@ import org.mockserver.model.Header;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 
+import jp.co.ot.zipcode.domain.model.request.AddressForm;
+
 public class ZipcodeRepositoryTest extends ZipcodeRepository {
 
 	@InjectMocks
@@ -72,8 +74,9 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
                         		+ "	],\n"
                         		+ "	\"status\": 200\n"
                         		+ "}"));
-        String zipcode = "0790177";
-        String responseBody = sut.searchAddress(zipcode);
+        AddressForm addressForm = new AddressForm();
+        addressForm.setZipcode("0790177");
+        String responseBody = sut.searchAddress(addressForm);
         System.out.println(responseBody);
 
         assertEquals("{\n"

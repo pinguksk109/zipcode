@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import jp.co.ot.zipcode.domain.model.request.AddressForm;
 import jp.co.ot.zipcode.infrastructure.repository.ZipcodeRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -71,8 +72,9 @@ class ZipcodeServiceTest extends ZipcodeService {
         		+ "}";
 		when(zipcodeRepository.searchAddress(any())).thenReturn(responseBody);
 		
-        String zipcode = "0790177";
-		String actual = sut.searchAddress(zipcode);
+        AddressForm addressForm = new AddressForm();
+        addressForm.setZipcode("0790177");
+		String actual = sut.searchAddress(addressForm);
 		
         assertEquals("{\n"
         		+ "	\"message\": null,\n"

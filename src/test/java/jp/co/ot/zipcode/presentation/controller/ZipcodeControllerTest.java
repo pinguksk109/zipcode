@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import jp.co.ot.zipcode.application.service.ZipcodeService;
+import jp.co.ot.zipcode.domain.model.request.AddressForm;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -39,29 +40,31 @@ class ZipcodeControllerTest extends ZipcodeController {
 	
 	@Test
 	public void searchAddress_7桁の数字を受け取った場合_HTTPステータス200を返すこと() throws Exception {
-        String zipcode = "0790177";
+        AddressForm addressForm = new AddressForm();
+        addressForm.setZipcode("0790177");
         mvc.perform(MockMvcRequestBuilders.get("/zipcode")
-        		.param("zipcode", zipcode))
+        		.param("zipcode", addressForm.getZipcode()))
         		.andExpect(status().isOk());
 	}
 	
 	@Test
 	public void searchAddress_7桁の数字以外を受け取った場合_HTTPステータス400を返すこと() throws Exception {
-        String zipcode = "079017";
+        AddressForm addressForm = new AddressForm();
+        addressForm.setZipcode("0790177");
         mvc.perform(MockMvcRequestBuilders.get("/zipcode")
-        		.param("zipcode", zipcode))
+        		.param("zipcode", addressForm.getZipcode()))
         		.andExpect(status().isBadRequest());
 	}
 
 	@Test
 	public void searchAddress_エラーを受け取った場合_HTTPステータス500を返すこと() throws Exception {
-        String zipcode = "0790177";
+        AddressForm addressForm = new AddressForm();
+        addressForm.setZipcode("0790177");
         String expectedErrorMessage = "問題が発生しました";
-        when(zipcodeService.searchAddress(zipcode)).thenThrow(new IOException(expectedErrorMessage));
+        when(zipcodeService.searchAddress(addressForm)).thenThrow(new IOException(expectedErrorMessage));
         mvc.perform(MockMvcRequestBuilders.get("/zipcode")
-        		.param("zipcode", zipcode))
+        		.param("zipcode", addressForm.getZipcode()))
         		.andExpect(status().isInternalServerError());
 	}
-
 
 }
