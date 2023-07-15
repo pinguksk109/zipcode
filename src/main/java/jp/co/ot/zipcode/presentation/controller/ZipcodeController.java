@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.ot.zipcode.application.service.ZipcodeService;
@@ -27,7 +26,7 @@ public class ZipcodeController {
 	Logger logger = LoggerFactory.getLogger(ZipcodeController.class);
 	
 	@GetMapping
-	public ResponseEntity<?> searchAddress(@RequestParam("zipcode") AddressForm addressForm) throws IOException {
+	public ResponseEntity<?> searchAddress(AddressForm addressForm) throws IOException {
 		
 		String response = new String();
 		
