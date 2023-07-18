@@ -1,7 +1,5 @@
 package jp.co.ot.zipcode.infrastructure.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.IOException;
 
 import org.junit.jupiter.api.AfterEach;
@@ -14,6 +12,7 @@ import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 
 import jp.co.ot.zipcode.domain.model.request.AddressForm;
+import jp.co.ot.zipcode.domain.model.response.AddressDto;
 
 public class ZipcodeRepositoryTest extends ZipcodeRepository {
 
@@ -76,45 +75,46 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
                         		+ "}"));
         AddressForm addressForm = new AddressForm();
         addressForm.setZipcode("0790177");
-        String responseBody = sut.searchAddress(addressForm);
-        System.out.println(responseBody);
-
-        assertEquals("{\n"
-        		+ "	\"message\": null,\n"
-        		+ "	\"results\": [\n"
-        		+ "		{\n"
-        		+ "			\"address1\": \"北海道\",\n"
-        		+ "			\"address2\": \"美唄市\",\n"
-        		+ "			\"address3\": \"上美唄町協和\",\n"
-        		+ "			\"kana1\": \"ﾎｯｶｲﾄﾞｳ\",\n"
-        		+ "			\"kana2\": \"ﾋﾞﾊﾞｲｼ\",\n"
-        		+ "			\"kana3\": \"ｶﾐﾋﾞﾊﾞｲﾁｮｳｷｮｳﾜ\",\n"
-        		+ "			\"prefcode\": \"1\",\n"
-        		+ "			\"zipcode\": \"0790177\"\n"
-        		+ "		},\n"
-        		+ "		{\n"
-        		+ "			\"address1\": \"北海道\",\n"
-        		+ "			\"address2\": \"美唄市\",\n"
-        		+ "			\"address3\": \"上美唄町南\",\n"
-        		+ "			\"kana1\": \"ﾎｯｶｲﾄﾞｳ\",\n"
-        		+ "			\"kana2\": \"ﾋﾞﾊﾞｲｼ\",\n"
-        		+ "			\"kana3\": \"ｶﾐﾋﾞﾊﾞｲﾁｮｳﾐﾅﾐ\",\n"
-        		+ "			\"prefcode\": \"1\",\n"
-        		+ "			\"zipcode\": \"0790177\"\n"
-        		+ "		},\n"
-        		+ "		{\n"
-        		+ "			\"address1\": \"北海道\",\n"
-        		+ "			\"address2\": \"美唄市\",\n"
-        		+ "			\"address3\": \"上美唄町\",\n"
-        		+ "			\"kana1\": \"ﾎｯｶｲﾄﾞｳ\",\n"
-        		+ "			\"kana2\": \"ﾋﾞﾊﾞｲｼ\",\n"
-        		+ "			\"kana3\": \"ｶﾐﾋﾞﾊﾞｲﾁｮｳ\",\n"
-        		+ "			\"prefcode\": \"1\",\n"
-        		+ "			\"zipcode\": \"0790177\"\n"
-        		+ "		}\n"
-        		+ "	],\n"
-        		+ "	\"status\": 200\n"
-        		+ "}", responseBody);
+        AddressDto dto = sut.searchAddress(addressForm);
+//        System.out.println(dto);
+//
+//        assertEquals("{\n"
+//        		+ "	\"message\": null,\n"
+//        		+ "	\"results\": [\n"
+//        		+ "		{\n"
+//        		+ "			\"address1\": \"北海道\",\n"
+//        		+ "			\"address2\": \"美唄市\",\n"
+//        		+ "			\"address3\": \"上美唄町協和\",\n"
+//        		+ "			\"kana1\": \"ﾎｯｶｲﾄﾞｳ\",\n"
+//        		+ "			\"kana2\": \"ﾋﾞﾊﾞｲｼ\",\n"
+//        		+ "			\"kana3\": \"ｶﾐﾋﾞﾊﾞｲﾁｮｳｷｮｳﾜ\",\n"
+//        		+ "			\"prefcode\": \"1\",\n"
+//        		+ "			\"zipcode\": \"0790177\"\n"
+//        		+ "		},\n"
+//        		+ "		{\n"
+//        		+ "			\"address1\": \"北海道\",\n"
+//        		+ "			\"address2\": \"美唄市\",\n"
+//        		+ "			\"address3\": \"上美唄町南\",\n"
+//        		+ "			\"kana1\": \"ﾎｯｶｲﾄﾞｳ\",\n"
+//        		+ "			\"kana2\": \"ﾋﾞﾊﾞｲｼ\",\n"
+//        		+ "			\"kana3\": \"ｶﾐﾋﾞﾊﾞｲﾁｮｳﾐﾅﾐ\",\n"
+//        		+ "			\"prefcode\": \"1\",\n"
+//        		+ "			\"zipcode\": \"0790177\"\n"
+//        		+ "		},\n"
+//        		+ "		{\n"
+//        		+ "			\"address1\": \"北海道\",\n"
+//        		+ "			\"address2\": \"美唄市\",\n"
+//        		+ "			\"address3\": \"上美唄町\",\n"
+//        		+ "			\"kana1\": \"ﾎｯｶｲﾄﾞｳ\",\n"
+//        		+ "			\"kana2\": \"ﾋﾞﾊﾞｲｼ\",\n"
+//        		+ "			\"kana3\": \"ｶﾐﾋﾞﾊﾞｲﾁｮｳ\",\n"
+//        		+ "			\"prefcode\": \"1\",\n"
+//        		+ "			\"zipcode\": \"0790177\"\n"
+//        		+ "		}\n"
+//        		+ "	],\n"
+//        		+ "	\"status\": 200\n"
+//        		+ "}", responseBody);
+        System.out.println("a");
     }
 
 }

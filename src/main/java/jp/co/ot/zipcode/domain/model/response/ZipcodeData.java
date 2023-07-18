@@ -1,9 +1,9 @@
 package jp.co.ot.zipcode.domain.model.response;
 
-import lombok.Data;
+import lombok.Value;
 
-@Data
-public class AddressEntity {
+@Value
+public class ZipcodeData {
 
 	private String address1;
 	private String address2;
@@ -11,8 +11,7 @@ public class AddressEntity {
 	private String kana1;
 	private String kana2;
 	private String kana3;
-	private String prefcode;
-	private String zipcode;
+	private Integer prefcode;
+	private Integer zipcode;
 	
-//	public AddressEntity();
 }

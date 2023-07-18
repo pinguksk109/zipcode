@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -13,6 +14,7 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 
 import jp.co.ot.zipcode.domain.model.request.AddressForm;
+import jp.co.ot.zipcode.domain.model.response.AddressDto;
 
 @Repository
 public class ZipcodeRepository {
@@ -26,7 +28,7 @@ public class ZipcodeRepository {
 	 * @return
 	 * @throws IOException
 	 */
-	public String searchAddress(AddressForm addressForm) throws IOException {
+	public AddressDto searchAddress(AddressForm addressForm) throws IOException {
 	    
 		// HttpClientオブジェクトを作成
 		HttpRequestFactory factory = (new NetHttpTransport()).createRequestFactory();
@@ -49,9 +51,11 @@ public class ZipcodeRepository {
 		}
 		
 		String responseBody = response.parseAsString();
-		
 		response.disconnect();
 		
-		return responseBody;
+		ObjectMapper objectMapper = new ObjectMapper();
+		AddressDto dto = objectMapper.readValue(responseBody, AddressDto.class);
+		
+		return dto;
 	}
 }
