@@ -1,8 +1,8 @@
 package jp.co.ot.zipcode.domain.model.response;
 
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class ZipcodeData {
 
 	private String address1;
@@ -12,6 +12,6 @@ public class ZipcodeData {
 	private String kana2;
 	private String kana3;
 	private Integer prefcode;
-	private Integer zipcode;
+	private String zipcode;
 	
 }

@@ -1,5 +1,7 @@
 package jp.co.ot.zipcode.infrastructure.repository;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.AfterEach;
@@ -11,7 +13,7 @@ import org.mockserver.model.Header;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 
-import jp.co.ot.zipcode.domain.model.request.AddressForm;
+import jp.co.ot.zipcode.domain.model.request.AddressEntity;
 import jp.co.ot.zipcode.domain.model.response.AddressDto;
 
 public class ZipcodeRepositoryTest extends ZipcodeRepository {
@@ -73,48 +75,40 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
                         		+ "	],\n"
                         		+ "	\"status\": 200\n"
                         		+ "}"));
-        AddressForm addressForm = new AddressForm();
+        AddressEntity addressForm = new AddressEntity();
         addressForm.setZipcode("0790177");
         AddressDto dto = sut.searchAddress(addressForm);
-//        System.out.println(dto);
-//
-//        assertEquals("{\n"
-//        		+ "	\"message\": null,\n"
-//        		+ "	\"results\": [\n"
-//        		+ "		{\n"
-//        		+ "			\"address1\": \"北海道\",\n"
-//        		+ "			\"address2\": \"美唄市\",\n"
-//        		+ "			\"address3\": \"上美唄町協和\",\n"
-//        		+ "			\"kana1\": \"ﾎｯｶｲﾄﾞｳ\",\n"
-//        		+ "			\"kana2\": \"ﾋﾞﾊﾞｲｼ\",\n"
-//        		+ "			\"kana3\": \"ｶﾐﾋﾞﾊﾞｲﾁｮｳｷｮｳﾜ\",\n"
-//        		+ "			\"prefcode\": \"1\",\n"
-//        		+ "			\"zipcode\": \"0790177\"\n"
-//        		+ "		},\n"
-//        		+ "		{\n"
-//        		+ "			\"address1\": \"北海道\",\n"
-//        		+ "			\"address2\": \"美唄市\",\n"
-//        		+ "			\"address3\": \"上美唄町南\",\n"
-//        		+ "			\"kana1\": \"ﾎｯｶｲﾄﾞｳ\",\n"
-//        		+ "			\"kana2\": \"ﾋﾞﾊﾞｲｼ\",\n"
-//        		+ "			\"kana3\": \"ｶﾐﾋﾞﾊﾞｲﾁｮｳﾐﾅﾐ\",\n"
-//        		+ "			\"prefcode\": \"1\",\n"
-//        		+ "			\"zipcode\": \"0790177\"\n"
-//        		+ "		},\n"
-//        		+ "		{\n"
-//        		+ "			\"address1\": \"北海道\",\n"
-//        		+ "			\"address2\": \"美唄市\",\n"
-//        		+ "			\"address3\": \"上美唄町\",\n"
-//        		+ "			\"kana1\": \"ﾎｯｶｲﾄﾞｳ\",\n"
-//        		+ "			\"kana2\": \"ﾋﾞﾊﾞｲｼ\",\n"
-//        		+ "			\"kana3\": \"ｶﾐﾋﾞﾊﾞｲﾁｮｳ\",\n"
-//        		+ "			\"prefcode\": \"1\",\n"
-//        		+ "			\"zipcode\": \"0790177\"\n"
-//        		+ "		}\n"
-//        		+ "	],\n"
-//        		+ "	\"status\": 200\n"
-//        		+ "}", responseBody);
-        System.out.println("a");
+        
+        assertEquals(null, dto.getMessage());
+
+        assertEquals("北海道", dto.getResults().get(0).getAddress1());
+        assertEquals("美唄市", dto.getResults().get(0).getAddress2());
+        assertEquals("上美唄町協和", dto.getResults().get(0).getAddress3());
+        assertEquals("ﾎｯｶｲﾄﾞｳ", dto.getResults().get(0).getKana1());
+        assertEquals("ﾋﾞﾊﾞｲｼ", dto.getResults().get(0).getKana2());
+        assertEquals("ｶﾐﾋﾞﾊﾞｲﾁｮｳｷｮｳﾜ", dto.getResults().get(0).getKana3());
+        assertEquals(1, dto.getResults().get(0).getPrefcode());
+        assertEquals("0790177", dto.getResults().get(0).getZipcode());
+        
+        assertEquals("北海道", dto.getResults().get(1).getAddress1());
+        assertEquals("美唄市", dto.getResults().get(1).getAddress2());
+        assertEquals("上美唄町南", dto.getResults().get(1).getAddress3());
+        assertEquals("ﾎｯｶｲﾄﾞｳ", dto.getResults().get(1).getKana1());
+        assertEquals("ﾋﾞﾊﾞｲｼ", dto.getResults().get(1).getKana2());
+        assertEquals("ｶﾐﾋﾞﾊﾞｲﾁｮｳﾐﾅﾐ", dto.getResults().get(1).getKana3());
+        assertEquals(1, dto.getResults().get(1).getPrefcode());
+        assertEquals("0790177", dto.getResults().get(1).getZipcode());
+        
+        assertEquals("北海道", dto.getResults().get(2).getAddress1());
+        assertEquals("美唄市", dto.getResults().get(2).getAddress2());
+        assertEquals("上美唄町", dto.getResults().get(2).getAddress3());
+        assertEquals("ﾎｯｶｲﾄﾞｳ", dto.getResults().get(2).getKana1());
+        assertEquals("ﾋﾞﾊﾞｲｼ", dto.getResults().get(2).getKana2());
+        assertEquals("ｶﾐﾋﾞﾊﾞｲﾁｮｳ", dto.getResults().get(2).getKana3());
+        assertEquals(1, dto.getResults().get(2).getPrefcode());
+        assertEquals("0790177", dto.getResults().get(2).getZipcode());
+        
+        assertEquals(200, dto.getStatus());
     }
 
 }

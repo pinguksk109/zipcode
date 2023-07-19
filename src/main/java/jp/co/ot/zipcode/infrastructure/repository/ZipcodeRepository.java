@@ -13,7 +13,7 @@ import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 
-import jp.co.ot.zipcode.domain.model.request.AddressForm;
+import jp.co.ot.zipcode.domain.model.request.AddressEntity;
 import jp.co.ot.zipcode.domain.model.response.AddressDto;
 
 @Repository
@@ -28,7 +28,7 @@ public class ZipcodeRepository {
 	 * @return
 	 * @throws IOException
 	 */
-	public AddressDto searchAddress(AddressForm addressForm) throws IOException {
+	public AddressDto searchAddress(AddressEntity addressForm) throws IOException {
 	    
 		// HttpClientオブジェクトを作成
 		HttpRequestFactory factory = (new NetHttpTransport()).createRequestFactory();

@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.co.ot.zipcode.application.service.ZipcodeService;
 import jp.co.ot.zipcode.domain.model.ErrorDetail;
 import jp.co.ot.zipcode.domain.model.ErrorResponse;
-import jp.co.ot.zipcode.domain.model.request.AddressForm;
+import jp.co.ot.zipcode.domain.model.request.AddressEntity;
+import jp.co.ot.zipcode.domain.model.response.AddressDto;
 
 @RestController
 @RequestMapping("/zipcode")
@@ -26,9 +27,9 @@ public class ZipcodeController {
 	Logger logger = LoggerFactory.getLogger(ZipcodeController.class);
 	
 	@GetMapping
-	public ResponseEntity<?> searchAddress(AddressForm addressForm) throws IOException {
+	public ResponseEntity<?> searchAddress(AddressEntity addressForm) throws IOException {
 		
-		String response = new String();
+		 AddressDto dto = new AddressDto();
 		
         if (!addressForm.getZipcode().matches("\\d{7}")) {
 //        	throw new BadRequestException("7桁数字以外の値が指定されています");
@@ -38,7 +39,7 @@ public class ZipcodeController {
         }
 		
 		try {
-			response = zipcodeService.searchAddress(addressForm);
+			AddressDto response = zipcodeService.searchAddress(addressForm);
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
 			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "000", "問題が発生しました", "問題が発生しました", "");
@@ -46,6 +47,6 @@ public class ZipcodeController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		}
 		
-		return ResponseEntity.ok().body(response);
+		return ResponseEntity.ok().body("A");
 	}
 }
