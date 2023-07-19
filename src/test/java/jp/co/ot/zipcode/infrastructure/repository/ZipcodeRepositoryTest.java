@@ -110,5 +110,9 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
         
         assertEquals(200, dto.getStatus());
     }
+    
+    @Test
+    public void searchAddress_200以外を受け取った場合_ResponseStatusExceptionが発生すること() throws IOException { 
 
+    }
 }

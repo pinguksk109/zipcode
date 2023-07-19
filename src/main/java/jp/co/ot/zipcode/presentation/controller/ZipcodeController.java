@@ -39,7 +39,7 @@ public class ZipcodeController {
         }
 		
 		try {
-			AddressDto response = zipcodeService.searchAddress(addressForm);
+			dto = zipcodeService.searchAddress(addressForm);
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
 			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "000", "問題が発生しました", "問題が発生しました", "");
@@ -47,6 +47,6 @@ public class ZipcodeController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		}
 		
-		return ResponseEntity.ok().body("A");
+		return ResponseEntity.ok().body(dto);
 	}
 }
