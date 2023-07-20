@@ -15,7 +15,7 @@ import jp.co.ot.zipcode.application.service.ZipcodeService;
 import jp.co.ot.zipcode.domain.model.ErrorDetail;
 import jp.co.ot.zipcode.domain.model.ErrorResponse;
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
-import jp.co.ot.zipcode.domain.model.response.AddressDto;
+import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
 
 @RestController
 @RequestMapping("/zipcode")
@@ -29,7 +29,7 @@ public class ZipcodeController {
 	@GetMapping
 	public ResponseEntity<?> searchAddress(AddressEntity addressForm) throws IOException {
 		
-		 AddressDto dto = new AddressDto();
+		 ZipcodeDataDto dto;
 		
         if (!addressForm.getZipcode().matches("\\d{7}")) {
 //        	throw new BadRequestException("7桁数字以外の値が指定されています");

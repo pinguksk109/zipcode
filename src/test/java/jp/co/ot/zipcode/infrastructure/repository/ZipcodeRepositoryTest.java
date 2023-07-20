@@ -14,7 +14,7 @@ import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
-import jp.co.ot.zipcode.domain.model.response.AddressDto;
+import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
 
 public class ZipcodeRepositoryTest extends ZipcodeRepository {
 
@@ -77,7 +77,7 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
                         		+ "}"));
         AddressEntity addressForm = new AddressEntity();
         addressForm.setZipcode("0790177");
-        AddressDto dto = sut.searchAddress(addressForm);
+        AddressDtoResponse dto = sut.searchAddress(addressForm);
         
         assertEquals(null, dto.getMessage());
 

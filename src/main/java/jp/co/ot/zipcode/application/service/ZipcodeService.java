@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
-import jp.co.ot.zipcode.domain.model.response.AddressDto;
+import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
+import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
 import jp.co.ot.zipcode.infrastructure.repository.ZipcodeRepository;
 
 @Service
@@ -21,10 +22,11 @@ public class ZipcodeService {
 	 * @return
 	 * @throws IOException
 	 */
-	public AddressDto searchAddress(AddressEntity addressForm) throws IOException {
+	public ZipcodeDataDto searchAddress(AddressEntity addressForm) throws IOException {
 		try {
 			// 取得処理実行
-			return zipcodeRepository.searchAddress(addressForm);
+			AddressDtoResponse dtoResponse = zipcodeRepository.searchAddress(addressForm);
+			return new ZipcodeDataDto(dtoResponse.getResults().get(0).getAddress1(), dtoResponse.getResults().get(0).getAddress2(), dtoResponse.getResults().get(0).getAddress3(), dtoResponse.getResults().get(0).getKana1(), dtoResponse.getResults().get(0).getKana2(), dtoResponse.getResults().get(0).getKana3(), dtoResponse.getResults().get(0).getZipcode());
 		} catch (IOException e) {
 			throw new IOException("Repositoryからデータを取得するところでエラーが発生しました");
 		}

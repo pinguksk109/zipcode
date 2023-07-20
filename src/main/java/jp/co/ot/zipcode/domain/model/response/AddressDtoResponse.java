@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class AddressDto {
+public class AddressDtoResponse {
 
 	private String message;
 	private List<ZipcodeData> results;

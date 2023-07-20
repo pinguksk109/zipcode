@@ -14,7 +14,7 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
-import jp.co.ot.zipcode.domain.model.response.AddressDto;
+import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
 
 @Repository
 public class ZipcodeRepository {
@@ -28,7 +28,7 @@ public class ZipcodeRepository {
 	 * @return
 	 * @throws IOException
 	 */
-	public AddressDto searchAddress(AddressEntity addressForm) throws IOException {
+	public AddressDtoResponse searchAddress(AddressEntity addressForm) throws IOException {
 	    
 		// HttpClientオブジェクトを作成
 		HttpRequestFactory factory = (new NetHttpTransport()).createRequestFactory();
@@ -54,7 +54,7 @@ public class ZipcodeRepository {
 		response.disconnect();
 		
 		ObjectMapper objectMapper = new ObjectMapper();
-		AddressDto dto = objectMapper.readValue(responseBody, AddressDto.class);
+		AddressDtoResponse dto = objectMapper.readValue(responseBody, AddressDtoResponse.class);
 		
 		return dto;
 	}
