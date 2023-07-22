@@ -29,10 +29,9 @@ public class ZipcodeController {
 	@GetMapping
 	public ResponseEntity<?> searchAddress(AddressEntity addressForm) throws IOException {
 		
-		 ZipcodeDataDto dto;
+		ZipcodeDataDto dto;
 		
         if (!addressForm.getZipcode().matches("\\d{7}")) {
-//        	throw new BadRequestException("7桁数字以外の値が指定されています");
         	ErrorDetail errorDetail = new ErrorDetail(HttpStatus.BAD_REQUEST.value(), "000", "7桁数字以外の値が指定されています", "7桁数字以外の値が指定されています", "");
         	ErrorResponse errorResponse = new ErrorResponse(errorDetail);
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
