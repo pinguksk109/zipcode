@@ -1,8 +1,8 @@
 package jp.co.ot.zipcode.domain.model.response;
 
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 public class ZipcodeDataDto {
 
 	private String address;
