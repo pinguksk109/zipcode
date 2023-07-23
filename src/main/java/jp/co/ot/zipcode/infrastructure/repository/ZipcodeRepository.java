@@ -60,5 +60,5 @@ public class ZipcodeRepository {
 	}
 
 		
-	public void saveZipcode(@Param("dto") ZipcodeDataDto dto) {}
+	public void saveZipcode(@Param("dto") ZipcodeDataDto dto, @Param("id") String id) {}
 }
