@@ -5,13 +5,13 @@
 <!-- @formatter:off -->
 <mapper namespace="jp.co.ot.zipcode.infrastructure.repository.ZipcodeRepository">
 
-	<insert id="save">
+	<insert id="saveZipcode">
 		INSERT INTO zipcode (
 			id,
 			zipcode,
 			address,
-			kana,
-		) VALUE (
+			kana
+		) VALUES (
 			#{id},
 			#{dto.zipcode},
 			#{dto.address},

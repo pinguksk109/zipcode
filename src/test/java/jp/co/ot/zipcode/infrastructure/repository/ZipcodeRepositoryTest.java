@@ -3,6 +3,7 @@ package jp.co.ot.zipcode.infrastructure.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import org.mockserver.model.HttpResponse;
 
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
 import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
+import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
 
 public class ZipcodeRepositoryTest extends ZipcodeRepository {
 
@@ -114,5 +116,12 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
     @Test
     public void searchAddress_200以外を受け取った場合_ResponseStatusExceptionが発生すること() throws IOException { 
 
+    }
+    
+    @Test
+//    @Ignore
+    public void saveZipcode_200を受け取った場合_DBに値が保存されていること() throws IOException { 
+    	ZipcodeDataDto dto = new ZipcodeDataDto("大阪府", "大阪市", "北区", "ｵｵｻｶﾌ", "ｵｵｻｶｼ", "ｷﾀｸ", "5300001");
+    	sut.saveZipcode(dto, UUID.randomUUID().toString());
     }
 }
