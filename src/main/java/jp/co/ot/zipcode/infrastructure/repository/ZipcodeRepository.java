@@ -37,7 +37,7 @@ public class ZipcodeRepository {
 
 		genericUrl.put("zipcode", addressForm.getZipcode());
 
-		// Httpリクエストオブジェクトを設定
+		// HTTPリクエストオブジェクトを設定
 		HttpRequest request = factory.buildGetRequest(genericUrl);
 
 		request.setThrowExceptionOnExecuteError(false);
