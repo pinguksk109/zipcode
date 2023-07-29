@@ -1,10 +1,12 @@
 package jp.co.ot.zipcode.application.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.ot.zipcode.domain.model.Zipcode;
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
 import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
 import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
@@ -36,7 +38,7 @@ public class ZipcodeService {
 					dtoResponse.getResults().get(0).getKana1(), dtoResponse.getResults().get(0).getKana2(),
 					dtoResponse.getResults().get(0).getKana3(), dtoResponse.getResults().get(0).getZipcode());
 		} catch (IOException e) {
-			throw new IOException("Repositoryからデータを取得するところでエラーが発生しました");
+			throw new IOException("Serviceクラスでエラーが発生しました");
 		}
 	}
 
@@ -61,5 +63,9 @@ public class ZipcodeService {
 		} catch (IOException e) {
 			throw new IOException("Serviceクラスでエラーが発生しました");
 		}
+	}
+	
+	public List<Zipcode> getList() throws IOException {
+		return zipcodeDbRepository.getList();
 	}
 }

@@ -16,7 +16,6 @@ import jp.co.ot.zipcode.application.service.ZipcodeService;
 import jp.co.ot.zipcode.domain.model.ErrorDetail;
 import jp.co.ot.zipcode.domain.model.ErrorResponse;
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
-import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
 
 @RestController
 @RequestMapping("/zipcode")
@@ -30,8 +29,6 @@ public class ZipcodeController {
 	@GetMapping("/search")
 	public ResponseEntity<?> searchAddress(AddressEntity addressForm) throws IOException {
 
-		ZipcodeDataDto dto;
-
 		if (!addressForm.getZipcode().matches("\\d{7}")) {
 			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.BAD_REQUEST.value(), "000", "7桁数字以外の値が指定されています",
 					"7桁数字以外の値が指定されています", "");
@@ -40,7 +37,7 @@ public class ZipcodeController {
 		}
 
 		try {
-			dto = zipcodeService.searchAddress(addressForm);
+			return ResponseEntity.ok().body(zipcodeService.searchAddress(addressForm));
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
 			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "000", "問題が発生しました",
@@ -48,32 +45,38 @@ public class ZipcodeController {
 			ErrorResponse errorResponse = new ErrorResponse(errorDetail);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		}
-
-		return ResponseEntity.ok().body(dto);
 	}
 
 	@PostMapping("/search")
 	public ResponseEntity<?> saveAddress(AddressEntity addressForm) {
-		ZipcodeDataDto dto;
-
+		
 		if (!addressForm.getZipcode().matches("\\d{7}")) {
-			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.BAD_REQUEST.value(), "000", "7桁数字以外の値が指定されています",
+			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.BAD_REQUEST.value(), "400", "7桁数字以外の値が指定されています",
 					"7桁数字以外の値が指定されています", "");
 			ErrorResponse errorResponse = new ErrorResponse(errorDetail);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
 		}
 
 		try {
-			dto = zipcodeService.saveAddress(addressForm);
+			return ResponseEntity.ok().body(zipcodeService.saveAddress(addressForm));
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
-			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "000", "問題が発生しました",
+			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "500", "問題が発生しました",
 					"問題が発生しました", "");
 			ErrorResponse errorResponse = new ErrorResponse(errorDetail);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		}
-
-		return ResponseEntity.ok().body(dto);
 	}
 
+	@GetMapping("/get")
+	public ResponseEntity<?> getList() {
+		try {
+			return ResponseEntity.ok().body(zipcodeService.getList());
+		} catch (Throwable e) {
+			logger.error(e.getMessage(), e);
+			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "500", "問題が発生しました", "問題が発生しました", "");
+			ErrorResponse errorResponse = new ErrorResponse(errorDetail);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+		}
+	}
 }

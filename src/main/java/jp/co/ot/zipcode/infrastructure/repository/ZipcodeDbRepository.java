@@ -1,9 +1,12 @@
 package jp.co.ot.zipcode.infrastructure.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import jp.co.ot.zipcode.domain.model.Zipcode;
 import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
 
 @Repository
@@ -15,6 +18,8 @@ public interface ZipcodeDbRepository {
 	 * @param dto
 	 * @param id
 	 */
-	public void saveZipcode(@Param("dto") ZipcodeDataDto dto);
+	void saveZipcode(@Param("dto") ZipcodeDataDto dto);
+	
+	List<Zipcode> getList();
 	
 }

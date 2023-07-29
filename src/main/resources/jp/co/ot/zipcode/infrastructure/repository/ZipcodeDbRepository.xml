@@ -18,5 +18,17 @@
 			#{dto.kana}
 		);
 	</insert>
+	
+	<select id="find" resultType="jp.co.ot.">
+		SELECT 
+			id,
+			zipcode,
+			address,
+			kana
+		FROM 
+			training.zipcode;
+	</select>
+
+
 
 </mapper>
