@@ -1,7 +1,6 @@
 package jp.co.ot.zipcode.application.service;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,7 +56,7 @@ public class ZipcodeService {
 					dtoResponse.getResults().get(0).getKana1(), dtoResponse.getResults().get(0).getKana2(),
 					dtoResponse.getResults().get(0).getKana3(), dtoResponse.getResults().get(0).getZipcode());
 			// 保存処理
-			zipcodeDbRepository.saveZipcode(dto, UUID.randomUUID().toString());
+			zipcodeDbRepository.saveZipcode(dto);
 			return dto;
 		} catch (IOException e) {
 			throw new IOException("Serviceクラスでエラーが発生しました");

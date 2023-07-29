@@ -12,7 +12,7 @@
 			address,
 			kana
 		) VALUES (
-			#{id},
+			#{dto.id},
 			#{dto.zipcode},
 			#{dto.address},
 			#{dto.kana}
