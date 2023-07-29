@@ -2,8 +2,6 @@ package jp.co.ot.zipcode.infrastructure.repository;
 
 import java.io.IOException;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,10 +15,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
 import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
-import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
 
 @Repository
-@Mapper
 public class ZipcodeRepository {
 
 	/**
@@ -60,7 +56,4 @@ public class ZipcodeRepository {
 
 		return dto;
 	}
-
-		
-	public void saveZipcode(@Param("dto") ZipcodeDataDto dto, @Param("id") String id) {}
 }

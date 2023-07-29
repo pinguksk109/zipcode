@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
 import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
 import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
+import jp.co.ot.zipcode.infrastructure.repository.ZipcodeDbRepository;
 import jp.co.ot.zipcode.infrastructure.repository.ZipcodeRepository;
 
 @Service
@@ -16,6 +17,9 @@ public class ZipcodeService {
 
 	@Autowired
 	private ZipcodeRepository zipcodeRepository;
+	
+	@Autowired
+	private ZipcodeDbRepository zipcodeDbRepository;
 
 	/**
 	 * 郵便番号に紐づく住所を取得する
@@ -53,7 +57,7 @@ public class ZipcodeService {
 					dtoResponse.getResults().get(0).getKana1(), dtoResponse.getResults().get(0).getKana2(),
 					dtoResponse.getResults().get(0).getKana3(), dtoResponse.getResults().get(0).getZipcode());
 			// 保存処理
-			zipcodeRepository.saveZipcode(dto, UUID.randomUUID().toString());
+			zipcodeDbRepository.saveZipcode(dto, UUID.randomUUID().toString());
 			return dto;
 		} catch (IOException e) {
 			throw new IOException("Serviceクラスでエラーが発生しました");
