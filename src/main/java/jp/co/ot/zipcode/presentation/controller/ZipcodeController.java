@@ -60,6 +60,13 @@ public class ZipcodeController {
 	@PostMapping("/search")
 	public ResponseEntity<?> saveAddress(AddressEntity addressForm) {
 		
+		if(Objects.isNull(addressForm.getZipcode())) {
+			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.BAD_REQUEST.value(), "400", "郵便番号が入力されていません",
+					"郵便番号が入力入力されていません", "");
+			ErrorResponse errorResponse = new ErrorResponse(errorDetail);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);			
+		}
+		
 		if (!addressForm.getZipcode().matches("\\d{7}")) {
 			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.BAD_REQUEST.value(), "400", "7桁数字以外の値が指定されています",
 					"7桁数字以外の値が指定されています", "");
