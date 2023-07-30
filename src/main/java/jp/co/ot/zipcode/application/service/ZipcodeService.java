@@ -2,6 +2,7 @@ package jp.co.ot.zipcode.application.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,9 @@ public class ZipcodeService {
 		try {
 			// 取得処理実行
 			AddressDtoResponse dtoResponse = zipcodeRepository.searchAddress(addressForm);
+			if(Objects.isNull(dtoResponse.getResults())) {
+				return new ZipcodeDataDto("指定された郵便番号はありませんでした", "", "", "", "", "", addressForm.getZipcode());
+			}
 			return new ZipcodeDataDto(dtoResponse.getResults().get(0).getAddress1(),
 					dtoResponse.getResults().get(0).getAddress2(), dtoResponse.getResults().get(0).getAddress3(),
 					dtoResponse.getResults().get(0).getKana1(), dtoResponse.getResults().get(0).getKana2(),
@@ -53,6 +57,9 @@ public class ZipcodeService {
 		try {
 			// 取得処理実行
 			AddressDtoResponse dtoResponse = zipcodeRepository.searchAddress(addressForm);
+			if(Objects.isNull(dtoResponse.getResults())) {
+				return new ZipcodeDataDto("指定された郵便番号はありませんでした", "", "", "", "", "", addressForm.getZipcode());
+			}
 			ZipcodeDataDto dto = new ZipcodeDataDto(dtoResponse.getResults().get(0).getAddress1(),
 					dtoResponse.getResults().get(0).getAddress2(), dtoResponse.getResults().get(0).getAddress3(),
 					dtoResponse.getResults().get(0).getKana1(), dtoResponse.getResults().get(0).getKana2(),
@@ -65,6 +72,11 @@ public class ZipcodeService {
 		}
 	}
 	
+	/**
+	 * DBに保存されているデータをすべて取得する
+	 * @return
+	 * @throws IOException
+	 */
 	public List<Zipcode> getList() throws IOException {
 		return zipcodeDbRepository.getList();
 	}
