@@ -19,7 +19,7 @@
 		);
 	</insert>
 	
-	<select id="find" resultType="jp.co.ot.">
+	<select id="getList" resultType="jp.co.ot.zipcode.domain.model.Zipcode">
 		SELECT 
 			id,
 			zipcode,
@@ -28,7 +28,5 @@
 		FROM 
 			training.zipcode;
 	</select>
-
-
 
 </mapper>
