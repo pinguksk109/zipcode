@@ -5,18 +5,22 @@
 <!-- @formatter:off -->
 <mapper namespace="jp.co.ot.zipcode.infrastructure.repository.ZipcodeDbRepository">
 
-	<insert id="saveZipcode">
+	<insert id="saveZipcode" parameterType="java.util.List">
 		INSERT INTO zipcode (
 			id,
 			zipcode,
 			address,
 			kana
-		) VALUES (
+		) VALUES 
+  		<foreach item="dto"  collection="dto" separator=",">
+		(
 			#{dto.id},
 			#{dto.zipcode},
 			#{dto.address},
 			#{dto.kana}
-		);
+		)
+		</foreach>
+		;
 	</insert>
 	
 	<select id="getList" resultType="jp.co.ot.zipcode.domain.model.Zipcode">

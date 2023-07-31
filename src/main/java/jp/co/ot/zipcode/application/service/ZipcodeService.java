@@ -60,21 +60,26 @@ public class ZipcodeService {
 	 * @return
 	 * @throws IOException
 	 */
-	public ZipcodeDataDto saveAddress(AddressEntity addressForm) throws IOException {
+	public List<ZipcodeDataDto> saveAddress(AddressEntity addressForm) throws IOException {
 		try {
-			// 取得処理実行
+			List<ZipcodeDataDto> dtoList = new ArrayList<>();
+
 			AddressDtoResponse dtoResponse = zipcodeRepository.searchAddress(addressForm);
 			if(Objects.isNull(dtoResponse.getResults())) {
-				return new ZipcodeDataDto("指定された郵便番号はありませんでした", "", "", "", "", "", addressForm.getZipcode());
+				dtoList.add(new ZipcodeDataDto("指定された郵便番号はありませんでした", "", "", "", "", "", addressForm.getZipcode()));
+				return dtoList;
 			}
 			
-			ZipcodeDataDto dto = new ZipcodeDataDto(dtoResponse.getResults().get(0).getAddress1(),
-					dtoResponse.getResults().get(0).getAddress2(), dtoResponse.getResults().get(0).getAddress3(),
-					dtoResponse.getResults().get(0).getKana1(), dtoResponse.getResults().get(0).getKana2(),
-					dtoResponse.getResults().get(0).getKana3(), dtoResponse.getResults().get(0).getZipcode());
+			for(int i = 0; i < dtoResponse.getResults().size(); i++) {
+				ZipcodeDataDto dto = new ZipcodeDataDto(dtoResponse.getResults().get(i).getAddress1(),
+						dtoResponse.getResults().get(i).getAddress2(), dtoResponse.getResults().get(i).getAddress3(),
+						dtoResponse.getResults().get(i).getKana1(), dtoResponse.getResults().get(i).getKana2(),
+						dtoResponse.getResults().get(i).getKana3(), dtoResponse.getResults().get(i).getZipcode());
+				dtoList.add(dto);
+			}
 			// 保存処理
-			zipcodeDbRepository.saveZipcode(dto);
-			return dto;
+			zipcodeDbRepository.saveZipcode(dtoList);
+			return dtoList;
 		} catch (IOException e) {
 			throw new IOException("Serviceクラスでエラーが発生しました");
 		}

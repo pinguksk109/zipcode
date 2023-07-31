@@ -19,7 +19,7 @@ public class ZipcodeDbRepositoryTest {
     @Ignore
     public void saveZipcode_200を受け取った場合_DBに値が保存されていること() throws IOException { 
     	ZipcodeDataDto dto = new ZipcodeDataDto("大阪府", "大阪市", "北区", "ｵｵｻｶﾌ", "ｵｵｻｶｼ", "ｷﾀｸ", "5300001");
-    	sut.saveZipcode(dto);
+//    	sut.saveZipcode(dto);
   }
 
 }

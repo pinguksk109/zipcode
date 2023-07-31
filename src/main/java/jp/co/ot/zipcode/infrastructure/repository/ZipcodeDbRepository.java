@@ -18,8 +18,12 @@ public interface ZipcodeDbRepository {
 	 * @param dto
 	 * @param id
 	 */
-	void saveZipcode(@Param("dto") ZipcodeDataDto dto);
+	void saveZipcode(@Param("dto") List<ZipcodeDataDto> dto);
 	
+	/**
+	 * DBのデータをすべて取得する
+	 * @return
+	 */
 	List<Zipcode> getList();
 	
 }
