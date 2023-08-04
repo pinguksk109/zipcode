@@ -1,6 +1,7 @@
 package jp.co.ot.zipcode.presentation.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import jp.co.ot.zipcode.application.service.ZipcodeService;
 import jp.co.ot.zipcode.domain.model.ErrorDetail;
 import jp.co.ot.zipcode.domain.model.ErrorResponse;
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
+import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
 
 @RestController
 @Validated
@@ -75,6 +77,10 @@ public class ZipcodeController {
 		}
 
 		try {
+			List<ZipcodeDataDto> dtoList = zipcodeService.saveAddress(addressForm);
+			if(dtoList.get(0).getAddress().equals("指定された郵便番号はありませんでした")) {
+				return ResponseEntity.noContent().build();
+			}
 			return ResponseEntity.ok().body(zipcodeService.saveAddress(addressForm));
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
