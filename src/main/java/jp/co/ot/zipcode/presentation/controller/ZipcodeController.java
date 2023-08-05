@@ -49,6 +49,10 @@ public class ZipcodeController {
 		}
 
 		try {
+			List<ZipcodeDataDto> dtoList = zipcodeService.saveAddress(addressForm);
+			if(dtoList.get(0).getAddress().equals("指定された郵便番号はありませんでした")) {
+				return ResponseEntity.noContent().build();
+			}
 			return ResponseEntity.ok().body(zipcodeService.searchAddress(addressForm));
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);

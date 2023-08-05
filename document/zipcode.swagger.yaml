@@ -1,0 +1,294 @@
+swagger: '2.0'
+info:
+  title: Zipcode API
+  description: 郵便番号を取得するAPI
+  version: v1.0
+host: zipcode
+basePath: /
+schemes:
+  - https
+tags:
+  - name: Zipcode
+    description: 郵便番号に関する操作
+
+paths:
+  '/zipcode/search':
+    get:
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      tags:
+        - Zipcode
+      description: 指定された郵便番号に紐づく住所を取得します
+      parameters:
+        - name: zipcode
+          in: query
+          description: 郵便番号
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 郵便番号に紐づく住所の取得に成功しました
+          schema:
+            type: array
+            items:
+              type: object
+              example:
+                id: c0dc0f83-46ae-4d05-b9b9-9f5d83ccbc68
+                address: 東京都千代田区千代田
+                kana: ﾄｳｷｮｳﾄﾁﾖﾀﾞｸﾁﾖﾀ
+                zipcode: 1000001
+              properties:
+                id:
+                  type: string
+                  description: ユニークなID
+                address:
+                  type: string
+                  description: 住所
+                kana:
+                  type: string
+                  description: 住所のフリガナ
+                zipcode: 
+                  type: string
+                  description: 検索対象の郵便番号
+        '204': 
+          description: 郵便番号に紐づく住所がありませんでした
+        '400':
+          description: 不正なパラメータが送られました
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  example:
+                    status: 400
+                    code: 400
+                    userMessage: 7桁以外の値が指定されています
+                    devMessage: 7桁以外の値が指定されています
+                    devInfo: ""
+                  properties:
+                    status:
+                      type: integer
+                      description: エラーステータスコード
+                    code:
+                      type: string
+                      description: エラーコード
+                    userMessage:
+                      type: string
+                      description: ユーザー向けエラーメッセージ
+                    devMessage:
+                      type: string
+                      description: 開発者向けエラーメッセージ
+                    devInfo:
+                      type: string
+                      description: 開発者向けエラー詳細情報
+        '500':
+          description: 問題が発生しました
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  example:
+                    status: 500
+                    code: 500
+                    userMessage: 問題が発生しました
+                    devMessage: 問題が発生しました
+                    devInfo: ""
+                  properties:
+                    status:
+                      type: integer
+                      description: エラーステータスコード
+                    code:
+                      type: string
+                      description: エラーコード
+                    userMessage:
+                      type: string
+                      description: ユーザー向けエラーメッセージ
+                    devMessage:
+                      type: string
+                      description: 開発者向けエラーメッセージ
+                    devInfo:
+                      type: string
+                      description: 開発者向けエラー詳細情報
+    post:
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      tags:
+        - Zipcode
+      description: 指定された郵便番号に紐づく住所を取得して、データベースに保存します
+      parameters:
+        - name: zipcode
+          in: query
+          description: 郵便番号
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 郵便番号に紐づく住所の保存に成功しました
+          schema:
+            type: array
+            items:
+              type: object
+              example:
+                id: c0dc0f83-46ae-4d05-b9b9-9f5d83ccbc68
+                address: 東京都千代田区千代田
+                kana: ﾄｳｷｮｳﾄﾁﾖﾀﾞｸﾁﾖﾀ
+                zipcode: 1000001
+              properties:
+                id:
+                  type: string
+                  description: ユニークなID
+                address:
+                  type: string
+                  description: 住所
+                kana:
+                  type: string
+                  description: 住所のフリガナ
+                zipcode: 
+                  type: string
+                  description: 検索対象の郵便番号
+        '204': 
+          description: 郵便番号に紐づく住所がありませんでした
+        '400':
+          description: 不正なパラメータが送られました
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  example:
+                    status: 400
+                    code: 400
+                    userMessage: 7桁以外の値が指定されています
+                    devMessage: 7桁以外の値が指定されています
+                    devInfo: ""
+                  properties:
+                    status:
+                      type: integer
+                      description: エラーステータスコード
+                    code:
+                      type: string
+                      description: エラーコード
+                    userMessage:
+                      type: string
+                      description: ユーザー向けエラーメッセージ
+                    devMessage:
+                      type: string
+                      description: 開発者向けエラーメッセージ
+                    devInfo:
+                      type: string
+                      description: 開発者向けエラー詳細情報
+        '500':
+          description: 問題が発生しました
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  example:
+                    status: 500
+                    code: 500
+                    userMessage: 問題が発生しました
+                    devMessage: 問題が発生しました
+                    devInfo: ""
+                  properties:
+                    status:
+                      type: integer
+                      description: エラーステータスコード
+                    code:
+                      type: string
+                      description: エラーコード
+                    userMessage:
+                      type: string
+                      description: ユーザー向けエラーメッセージ
+                    devMessage:
+                      type: string
+                      description: 開発者向けエラーメッセージ
+                    devInfo:
+                      type: string
+                      description: 開発者向けエラー詳細情報
+  '/zipcode/get':
+    get:
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      tags:
+        - Zipcode
+      description: 今まで調査して保存された郵便番号をすべて返します
+      responses:
+        '200':
+          description: 郵便番号に紐づく住所の取得に成功しました
+          schema:
+            type: array
+            items:
+              type: object
+              example:
+                - id: c0dc0f83-46ae-4d05-b9b9-9f5d83ccbc68
+                  address: 東京都千代田区千代田
+                  kana: ﾄｳｷｮｳﾄﾁﾖﾀﾞｸﾁﾖﾀ
+                  zipcode: 1000001
+                - id: 3bac75fc-8037-4161-afaf-e8a9dfe7948c
+                  address: 東京都千代田区千代田
+                  kana: ﾄｳｷｮｳﾄﾁﾖﾀﾞｸﾁﾖﾀ
+                  zipcode: 1000001
+                - id: fb1429ff-a6c4-4e38-b119-3d2c4795f248
+                  address: 山梨県甲府市和田町
+                  kana: ﾔﾏﾅｼｹﾝｺｳﾌｼﾜﾀﾞﾏﾁ
+                  zipcode: 4000001
+              properties:
+                id:
+                  type: string
+                  description: ユニークなID
+                address:
+                  type: string
+                  description: 住所
+                kana:
+                  type: string
+                  description: 住所のフリガナ
+                zipcode: 
+                  type: string
+                  description: 検索対象の郵便番号
+        '500':
+          description: 問題が発生しました
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  example:
+                    status: 500
+                    code: 500
+                    userMessage: 問題が発生しました
+                    devMessage: 問題が発生しました
+                    devInfo: ""
+                  properties:
+                    status:
+                      type: integer
+                      description: エラーステータスコード
+                    code:
+                      type: string
+                      description: エラーコード
+                    userMessage:
+                      type: string
+                      description: ユーザー向けエラーメッセージ
+                    devMessage:
+                      type: string
+                      description: 開発者向けエラーメッセージ
+                    devInfo:
+                      type: string
+                      description: 開発者向けエラー詳細情報
