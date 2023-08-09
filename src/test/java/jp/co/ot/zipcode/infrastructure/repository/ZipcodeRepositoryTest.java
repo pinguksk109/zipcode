@@ -1,6 +1,7 @@
 package jp.co.ot.zipcode.infrastructure.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
@@ -8,10 +9,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
+import org.springframework.web.server.ResponseStatusException;
 
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
 import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
@@ -23,6 +26,12 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
     private ClientAndServer mockServer;
     private Integer mockPort = 1080;
     private String mockServerUrl = "http://localhost:" + mockPort;
+    
+    @Mock
+    private HttpRequest httpRequestMock;
+
+    @Mock
+    private HttpResponse httpResponseMock;
     
     @BeforeEach
     public void setUp() {
@@ -111,10 +120,16 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
         assertEquals(200, dto.getStatus());
     }
     
+    
     @Test
     public void searchAddress_200以外を受け取った場合_ResponseStatusExceptionが発生すること() throws IOException { 
-
+    	
+        mockServer.when(HttpRequest.request().withMethod("GET")
+                .withPath("https://zipcloud.ibsnet.co.jp/api/search")).respond(HttpResponse.response().withStatusCode(500));
+    	
+        AddressEntity addressForm = new AddressEntity();
+        addressForm.setZipcode("0790177");       
+        searchAddress(addressForm); 
+        assertThrows(ResponseStatusException.class, () -> sut.searchAddress(addressForm));
     }
-    
-
 }
