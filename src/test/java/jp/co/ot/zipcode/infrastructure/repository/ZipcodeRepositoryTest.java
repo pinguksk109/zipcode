@@ -16,6 +16,7 @@ import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
+import org.springframework.web.server.ResponseStatusException;
 
 import jp.co.ot.zipcode.domain.model.request.AddressEntity;
 import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
@@ -50,7 +51,7 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
     @Test
     public void searchAddress_HTTPステータスが200の場合_郵便番号を取得できること() throws IOException {
         mockServer.when(HttpRequest.request().withMethod("GET")
-                .withPath("https://zipcloud.ibsnet.co.jp/api/search")).respond(HttpResponse.response().withStatusCode(200)
+                .withPath("https://zipcloud.ibsnet.co.jp/api/search").withQueryStringParameter("zipcode", "0790177")).respond(HttpResponse.response().withStatusCode(200)
                         .withHeader(new Header("Content-Type", "application/json; charset=utf-8")).withBody("{\n"
                         		+ "	\"message\": null,\n"
                         		+ "	\"results\": [\n"
@@ -124,16 +125,21 @@ public class ZipcodeRepositoryTest extends ZipcodeRepository {
     }
     
     
-//    @Test
-//    public void searchAddress_200以外を受け取った場合_ResponseStatusExceptionが発生すること() throws IOException { 
-//    	
-//        mockServer.when(HttpRequest.request().withMethod("GET")
-//                .withPath("httpps://zipcloud.ibsnet.co.jp/api/search")).respond(HttpResponse.response().withStatusCode(500));
-//    	
-//        AddressEntity addressForm = new AddressEntity();
-//        addressForm.setZipcode("0790177");       
-//        searchAddress(addressForm);
-//        assertThrows(ResponseStatusException.class, () -> sut.searchAddress(addressForm));
-//        
-//    }
+    @Test
+    public void searchAddress_200以外を受け取った場合_ResponseStatusExceptionが発生すること() throws IOException { 
+    	
+        AddressEntity addressForm = new AddressEntity();
+        
+        mockServer.when(HttpRequest.request().withMethod("GET")
+                .withPath("https://zipcloud.ibsnet.co.jp/api/search").withQueryStringParameter("zipcode", "99999"))
+        .respond(HttpResponse.response().withStatusCode(400)
+                        .withHeader(new Header("Content-Type", "application/json; charset=utf-8"))
+                        .withBody("{\n" +
+                                "    \"message\": \"パラメータ「郵便番号」の桁数が不正です。\",\n" +
+                                "    \"results\": null,\n" +
+                                "    \"status\": 400\n" +
+                                "}"));
+
+        assertThrows(ResponseStatusException.class, () -> sut.searchAddress(addressForm));
+    }
 }

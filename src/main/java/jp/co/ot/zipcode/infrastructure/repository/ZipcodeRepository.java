@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -39,20 +38,22 @@ public class ZipcodeRepository {
 		HttpRequest request = factory.buildGetRequest(genericUrl);
 
 		request.setThrowExceptionOnExecuteError(false);
+		
+		request.setConnectTimeout(30 * 1000);
+		request.setReadTimeout(60 * 1000);
 
 		// レスポンス文字列だけ取得して接続を切断
 		HttpResponse response = request.execute();
 
-		if (!HttpStatus.valueOf(response.getStatusCode()).is2xxSuccessful()) {
+		String responseBody = response.parseAsString();
+		response.disconnect();
+		
+		AddressDtoResponse dto = AddressDtoResponse.parse(responseBody);
+		
+		if (dto.getStatus() != HttpStatus.OK.value()) {
 			response.disconnect();
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "郵便番号APIからレスポンスを取得できませんでした");
 		}
-
-		String responseBody = response.parseAsString();
-		response.disconnect();
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		AddressDtoResponse dto = objectMapper.readValue(responseBody, AddressDtoResponse.class);
 		
 		return dto;
 	}
