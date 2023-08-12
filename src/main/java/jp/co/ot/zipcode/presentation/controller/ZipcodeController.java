@@ -31,6 +31,12 @@ public class ZipcodeController {
 
 	Logger logger = LoggerFactory.getLogger(ZipcodeController.class);
 
+	/**
+	 * 住所を調べます
+	 * @param addressForm
+	 * @return
+	 * @throws IOException
+	 */
 	@GetMapping("/search")
 	public ResponseEntity<?> searchAddress(AddressEntity addressForm) throws IOException {
 
@@ -63,6 +69,11 @@ public class ZipcodeController {
 		}
 	}
 
+	/**
+	 * 住所を調べたうえで保存します
+	 * @param addressForm
+	 * @return
+	 */
 	@PostMapping("/search")
 	public ResponseEntity<?> saveAddress(AddressEntity addressForm) {
 		
@@ -95,6 +106,10 @@ public class ZipcodeController {
 		}
 	}
 
+	/**
+	 * 今まで調べて保存された住所一覧を取得します
+	 * @return
+	 */
 	@GetMapping("/get")
 	public ResponseEntity<?> getList() {
 		try {
