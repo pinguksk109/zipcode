@@ -61,7 +61,17 @@ class ZipcodeControllerTest extends ZipcodeController {
 	
 	@Test
 	public void GET_searchAddress_処理が正常に行われデータがないと返ってきた場合_HTTPステータス204を返すこと() throws Exception {
+		List<ZipcodeDataDto> dtoList = new ArrayList();
+		ZipcodeDataDto dto = new ZipcodeDataDto("指定された郵便番号はありませんでした", "", "", "", "", "", "9999999"); 
+		dtoList.add(dto);
+		when(zipcodeService.searchAddress(any())).thenReturn(dtoList);
 		
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/zipcode/search")
+                .param("zipcode", "9999999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andReturn();
 	}
 	
 	@Test
@@ -102,7 +112,18 @@ class ZipcodeControllerTest extends ZipcodeController {
 	}
 	
 	@Test
-	public void POST_searchAddress_処理が正常に行われデータがないと返ってきた場合_HTTPステータス204を返すこと() throws Exception {
+	public void POST_saveAddress_処理が正常に行われデータがないと返ってきた場合_HTTPステータス204を返すこと() throws Exception {
+		List<ZipcodeDataDto> dtoList = new ArrayList();
+		ZipcodeDataDto dto = new ZipcodeDataDto("指定された郵便番号はありませんでした", "", "", "", "", "", "9999999"); 
+		dtoList.add(dto);
+		when(zipcodeService.saveAddress(any())).thenReturn(dtoList);
+		
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/zipcode/search")
+                .param("zipcode", "1000001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andReturn();
 	}
 	
 	@Test

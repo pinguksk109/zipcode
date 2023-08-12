@@ -49,11 +49,11 @@ public class ZipcodeController {
 		}
 
 		try {
-			List<ZipcodeDataDto> dtoList = zipcodeService.saveAddress(addressForm);
-			if(!dtoList.isEmpty() && dtoList.get(0).getAddress().equals("指定された郵便番号はありませんでした")) {
+			List<ZipcodeDataDto> dtoList = zipcodeService.searchAddress(addressForm);
+			if(dtoList.get(0).getAddress().equals("指定された郵便番号はありませんでした")) {
 				return ResponseEntity.noContent().build();
 			}
-			return ResponseEntity.ok().body(zipcodeService.searchAddress(addressForm));
+			return ResponseEntity.ok().body(dtoList);
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
 			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "400", "問題が発生しました",
@@ -82,10 +82,10 @@ public class ZipcodeController {
 
 		try {
 			List<ZipcodeDataDto> dtoList = zipcodeService.saveAddress(addressForm);
-			if(!dtoList.isEmpty() && dtoList.get(0).getAddress().equals("指定された郵便番号はありませんでした")) {
+			if(dtoList.get(0).getAddress().equals("指定された郵便番号はありませんでした")) {
 				return ResponseEntity.noContent().build();
 			}
-			return ResponseEntity.ok().body(zipcodeService.saveAddress(addressForm));
+			return ResponseEntity.ok().body(dtoList);
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
 			ErrorDetail errorDetail = new ErrorDetail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "500", "問題が発生しました",
