@@ -88,9 +88,13 @@ public class ZipcodeService {
 	/**
 	 * DBに保存されているデータをすべて取得する
 	 * @return
-	 * @throws IOException
+	 * @throws IOException 
 	 */
-	public List<Zipcode> getList() throws IOException {
-		return zipcodeDbRepository.getList();
+	public List<Zipcode> getList() throws Exception {
+		try {
+			return zipcodeDbRepository.getList();
+		} catch (Exception e) {
+			throw new Exception("Serviceクラスでエラーが発生しました");
+		}
 	}
 }
