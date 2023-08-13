@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>郵便番号</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>住所検索</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>住所</th>
+                    <th>フリガナ</th>
+                    <th>郵便番号</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="dto : ${dtoList}">
+                    <td th:text="${dto.address}"></td>
+                    <td th:text="${dto.kana}"></td>
+                    <td th:text="${dto.zipcode}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
