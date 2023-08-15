@@ -32,5 +32,14 @@
 		FROM 
 			training.zipcode;
 	</select>
+	
+	<update id="putList">
+		UPDATE training.zipcode
+		SET 
+			zipcode=#{query.zipcode}, 
+			address=#{query.address},
+			kana=#{query.kana}
+		WHERE id = #{id}
+	</update>
 
 </mapper>

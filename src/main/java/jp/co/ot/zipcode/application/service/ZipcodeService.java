@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import jp.co.ot.zipcode.domain.model.response.AddressDtoResponse;
 import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
 import jp.co.ot.zipcode.infrastructure.repository.ZipcodeDbRepository;
 import jp.co.ot.zipcode.infrastructure.repository.ZipcodeRepository;
+import jp.co.ot.zipcode.presentation.request.UpdateAddressListRequestQuery;
 
 @Service
 public class ZipcodeService {
@@ -96,5 +99,14 @@ public class ZipcodeService {
 		} catch (Exception e) {
 			throw new Exception("Serviceクラスでエラーが発生しました");
 		}
+	}
+
+	public void putList(String id, @Valid UpdateAddressListRequestQuery query) throws Exception {
+		try {
+			zipcodeDbRepository.putList(id, query);
+		} catch (Exception e) {
+			throw new Exception("Serviceクラスでエラーが発生しました");
+		}
+		
 	}
 }

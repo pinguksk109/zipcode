@@ -2,12 +2,15 @@ package jp.co.ot.zipcode.infrastructure.repository;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import jp.co.ot.zipcode.domain.model.Zipcode;
 import jp.co.ot.zipcode.domain.model.response.ZipcodeDataDto;
+import jp.co.ot.zipcode.presentation.request.UpdateAddressListRequestQuery;
 
 @Repository
 @Mapper
@@ -25,5 +28,8 @@ public interface ZipcodeDbRepository {
 	 * @return
 	 */
 	List<Zipcode> getList();
+
+	
+	void putList(String id, @Valid UpdateAddressListRequestQuery query);
 	
 }
